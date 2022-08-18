@@ -1,7 +1,8 @@
 
 <p align="center">
     <a href="https://t.me/noto_app"><img src="https://telegram.org/img/t_logo.png?1"></a>
-</p>
+</p>  
+
 # Noto - No Tomorrow
 
 **Description**  
