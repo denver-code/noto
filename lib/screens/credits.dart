@@ -144,13 +144,20 @@ class _CreditScreenState extends State<CreditScreen> {
                             Column(
                               children: List.generate(credits[index][1].length,
                                   (indexText) {
-                                return Text(
-                                  credits[index][1][indexText],
-                                  style: TextStyle(
-                                    color: _themePicker("text"),
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 20,
-                                  ),
+                                return Column(
+                                  children: [
+                                    Text(
+                                      credits[index][1][indexText],
+                                      style: TextStyle(
+                                        color: _themePicker("text"),
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 7,
+                                    )
+                                  ],
                                 );
                               }),
                             ),
