@@ -109,15 +109,32 @@ class _ToDoScreenState extends State<ToDoScreen> {
     );
   }
 
+  _themePicker(String obj) {
+    switch (isDarkTheme) {
+      case true:
+        switch (obj) {
+          case "scaffold":
+            return Colors.black;
+          case "image":
+          case "text":
+            return Colors.white;
+        }
+        break;
+      default:
+        switch (obj) {
+          case "scaffold":
+            return Colors.white;
+          case "image":
+          case "text":
+            return Colors.black;
+        }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: (() {
-        if (isDarkTheme) {
-          return Colors.black;
-        }
-        return Colors.white;
-      }()),
+      backgroundColor: _themePicker("scaffold"),
       body: SafeArea(
           child: Padding(
         padding:
@@ -131,12 +148,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   onTap: _switchTheme,
                   child: Image(
                     image: const AssetImage("assets/images/moon_black.png"),
-                    color: (() {
-                      if (isDarkTheme) {
-                        return Colors.white;
-                      }
-                      return Colors.black;
-                    }()),
+                    color: _themePicker("image"),
                     width: 35,
                   ),
                 ),
@@ -144,12 +156,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   onTap: () => {Navigator.of(context).pushNamed("/credits")},
                   child: Image(
                     image: const AssetImage("assets/images/coffe_black.png"),
-                    color: (() {
-                      if (isDarkTheme) {
-                        return Colors.white;
-                      }
-                      return Colors.black;
-                    }()),
+                    color: _themePicker("image"),
                     width: 35,
                   ),
                 )
@@ -165,12 +172,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                 Text(
                   "ALL",
                   style: TextStyle(
-                    color: (() {
-                      if (isDarkTheme) {
-                        return Colors.white;
-                      }
-                      return Colors.black;
-                    }()),
+                    color: _themePicker("text"),
                     fontWeight: FontWeight.w800,
                     fontSize: 35,
                   ),
@@ -262,12 +264,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
               child: Text(
                 "Add a new task",
                 style: TextStyle(
-                  color: (() {
-                    if (isDarkTheme) {
-                      return Colors.white;
-                    }
-                    return Colors.black;
-                  }()),
+                  color: _themePicker("text"),
                   fontSize: 25,
                   fontWeight: FontWeight.w300,
                 ),
