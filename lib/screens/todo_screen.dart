@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import "package:flutter/material.dart";
 import 'package:noto/internal/hex_color.dart';
-import 'package:noto/internal/todo_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ToDoScreen extends StatefulWidget {
@@ -15,13 +14,7 @@ class ToDoScreen extends StatefulWidget {
 class _ToDoScreenState extends State<ToDoScreen> {
   final TextEditingController _taskName = TextEditingController();
   bool isDarkTheme = false;
-  List tasks = [
-    // {"name": "wake up at 7am", "isChecked": true},
-    // {"name": "brush your teeth", "isChecked": true},
-    // {"name": "walk the dog", "isChecked": true},
-    // {"name": "pay the bills", "isChecked": false},
-    // {"name": "work on UI/UX", "isChecked": false},
-  ];
+  List tasks = [];
 
   @override
   void initState() {
@@ -49,7 +42,9 @@ class _ToDoScreenState extends State<ToDoScreen> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       var encodedList = (prefs.getString('today_tasks'));
-      tasks = json.decode(encodedList!);
+      if (encodedList!.isNotEmpty) {
+        tasks = json.decode(encodedList);
+      }
     });
   }
 
@@ -61,7 +56,10 @@ class _ToDoScreenState extends State<ToDoScreen> {
   }
 
   _switchChecked(int index) async {
-    tasks[index]["isChecked"] = !tasks[index]["isChecked"];
+    setState(() {
+      tasks[index]["isChecked"] = !tasks[index]["isChecked"];
+    });
+
     _saveTasks();
   }
 
@@ -143,7 +141,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => {},
+                  onTap: () => {Navigator.of(context).pushNamed("/credits")},
                   child: Image(
                     image: const AssetImage("assets/images/coffe_black.png"),
                     color: (() {
@@ -218,6 +216,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                             onTap: () => _switchChecked(index),
                             child: Text(
                               tasks[index]["name"],
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: (() {
                                     switch (isDarkTheme) {
