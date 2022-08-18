@@ -39,15 +39,60 @@ class _CreditScreenState extends State<CreditScreen> {
     });
   }
 
+  _themePicker(String obj) {
+    switch (isDarkTheme) {
+      case true:
+        switch (obj) {
+          case "scaffold":
+            return Colors.black;
+          case "image":
+          case "text":
+            return Colors.white;
+        }
+        break;
+      default:
+        switch (obj) {
+          case "scaffold":
+            return Colors.white;
+          case "image":
+          case "text":
+            return Colors.black;
+        }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    List credits = [
+      [
+        "DEVELOPER INFO",
+        [
+          "Telegram: @denver_bot",
+          "Instagram: @denver.lade.py",
+          "Snapchat: @igor.savenko"
+        ],
+      ],
+      [
+        "APPLICATION INFO",
+        [
+          "Name: $appName",
+          "Version: v$version",
+          "Package name: $packageName",
+          "Build number: v$buildNumber",
+        ]
+      ],
+      [
+        "NEWS & DONATION LINKS",
+        [
+          "Telegram: @noto_app",
+          "Instagram: @comming_soon",
+          "Patreon: @coming_soon",
+          "PayPal: @coming_soon"
+        ]
+      ]
+    ];
     return Scaffold(
-      backgroundColor: (() {
-        if (isDarkTheme) {
-          return Colors.black;
-        }
-        return Colors.white;
-      }()),
+      backgroundColor: _themePicker("scaffold"),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(35),
@@ -61,12 +106,7 @@ class _CreditScreenState extends State<CreditScreen> {
               child: Image(
                 image: const AssetImage("assets/images/bi_x-lg.png"),
                 width: 35,
-                color: (() {
-                  if (isDarkTheme) {
-                    return Colors.white;
-                  }
-                  return Colors.black;
-                }()),
+                color: _themePicker("image"),
               ),
             ),
             const SizedBox(
@@ -79,222 +119,49 @@ class _CreditScreenState extends State<CreditScreen> {
                   Text(
                     "CREDITS",
                     style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
+                      color: _themePicker("text"),
                       fontWeight: FontWeight.w800,
                       fontSize: 35,
                     ),
                   ),
-                  Text(
-                    "DEVELOPER INFO",
-                    style: TextStyle(
-                      color: HexColor.fromHex("#9C9C9C"),
-                      fontWeight: FontWeight.w800,
-                      fontSize: 18,
+                  Expanded(
+                      child: SingleChildScrollView(
+                    child: Column(
+                      children: List.generate(credits.length, (index) {
+                        return Column(
+                          children: [
+                            Text(
+                              credits[index][0],
+                              style: TextStyle(
+                                color: HexColor.fromHex("#9C9C9C"),
+                                fontWeight: FontWeight.w800,
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Column(
+                              children: List.generate(credits[index][1].length,
+                                  (indexText) {
+                                return Text(
+                                  credits[index][1][indexText],
+                                  style: TextStyle(
+                                    color: _themePicker("text"),
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 20,
+                                  ),
+                                );
+                              }),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        );
+                      }),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Telegram: @denver_bot",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Text(
-                    "Instagram: @denver.lade.py",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Text(
-                    "Snapchat: @igor.savenko",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    "APPLICATION INFO",
-                    style: TextStyle(
-                      color: HexColor.fromHex("#9C9C9C"),
-                      fontWeight: FontWeight.w800,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Name: $appName",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Text(
-                    "Version: v$version",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Text(
-                    "Package name: $packageName",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Text(
-                    "Build number: v$buildNumber",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    "NEWS & DONATION LINKS",
-                    style: TextStyle(
-                      color: HexColor.fromHex("#9C9C9C"),
-                      fontWeight: FontWeight.w800,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Telegram: @noto_app",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Text(
-                    "Instagram: @comming_soon",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Text(
-                    "Patreon: @coming_soon",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Text(
-                    "PayPal: @coming_soon",
-                    style: TextStyle(
-                      color: (() {
-                        if (isDarkTheme) {
-                          return Colors.white;
-                        }
-                        return Colors.black;
-                      }()),
-                      fontWeight: FontWeight.w300,
-                      fontSize: 20,
-                    ),
-                  ),
+                  ))
                 ],
               ),
             )),
