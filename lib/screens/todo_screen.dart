@@ -13,6 +13,7 @@ class ToDoScreen extends StatefulWidget {
 
 class _ToDoScreenState extends State<ToDoScreen> {
   final TextEditingController _taskName = TextEditingController();
+  final TextEditingController _newTaskName = TextEditingController();
   bool isDarkTheme = false;
   List tasks = [];
 
@@ -64,20 +65,70 @@ class _ToDoScreenState extends State<ToDoScreen> {
   }
 
   _removeTask(int index) async {
-    tasks.removeAt(index);
+    setState(() {
+      tasks.removeAt(index);
+    });
     _saveTasks();
   }
 
   _addTask(String name) async {
-    tasks.add({"name": name, "isChecked": false});
+    setState(() {
+      tasks.add({"name": name, "isChecked": false});
+    });
     _saveTasks();
   }
 
-  showAlertDialog(BuildContext context) {
+  _editTask(String newName, int index) async {
+    setState(() {
+      tasks[index]["name"] = newName;
+    });
+    _saveTasks();
+  }
+
+  showEditTaskDiaglog(BuildContext context, int index) {
     Widget cancelButton = TextButton(
       child: const Text("Cancel"),
       onPressed: () {
         Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text("Edit"),
+      onPressed: () {
+        _editTask(_newTaskName.text, index);
+        _newTaskName.clear();
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog addNewTask = AlertDialog(
+      title: const Text("Editing a task"),
+      content: TextField(
+        controller: _newTaskName,
+        decoration: const InputDecoration(hintText: "New task name"),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return addNewTask;
+      },
+    );
+  }
+
+  showAddNewTaskDialog(
+    BuildContext context,
+  ) {
+    Widget cancelButton = TextButton(
+      child: const Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+        _taskName.clear();
       },
     );
     Widget continueButton = TextButton(
@@ -89,7 +140,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
       },
     );
 
-    AlertDialog alert = AlertDialog(
+    AlertDialog addNewTask = AlertDialog(
       title: const Text("Adding a new task"),
       content: TextField(
         controller: _taskName,
@@ -104,7 +155,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return addNewTask;
       },
     );
   }
@@ -214,6 +265,8 @@ class _ToDoScreenState extends State<ToDoScreen> {
                             height: 30,
                           ),
                           GestureDetector(
+                            onLongPress: () =>
+                                showEditTaskDiaglog(context, index),
                             onDoubleTap: () => _removeTask(index),
                             onTap: () => _switchChecked(index),
                             child: Text(
@@ -259,7 +312,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
             ),
             GestureDetector(
               onTap: () {
-                showAlertDialog(context);
+                showAddNewTaskDialog(context);
               },
               child: Text(
                 "Add a new task",
@@ -274,7 +327,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
               height: 10,
             ),
             Text(
-              "Tap on task - change status;\nDouble tap on task - delete task.",
+              "Tap - change status;\nDouble tap - delete task.\nLong press - edit task.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: HexColor.fromHex("#9C9C9C"),
