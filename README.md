@@ -4,16 +4,16 @@
 </p>
 # Noto - No Tomorrow
 
-**Description**
+**Description**  
 Noto (No Tomorrow) - this is a simple, minimalist application that will help you organize your workflow.
 Here you can add tasks, change them, change their status, delete them, assign them to be completed on a particular day, or simply to a continuous list of functions, or you can make a shopping list so that you don't forget anything in the store.
 
-**What you can do now?**
+**What you can do now?**  
 - add new tasks
 - change their checking status
 - delete tasks
 
-**What do I want to add in the future? aka ToDo**
+**What do I want to add in the future? aka ToDo**  
 - Add tasks synchronization with the account
 - Implement a daily task list
 - Create account in Instagram/Patreon/PayPal
