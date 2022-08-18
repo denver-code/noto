@@ -272,7 +272,19 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   fontWeight: FontWeight.w300,
                 ),
               ),
-            )
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Tap on task - change status;\nDouble tap on task - delete task.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: HexColor.fromHex("#9C9C9C"),
+                fontSize: 15,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
           ],
         ),
       )),
